@@ -3,6 +3,7 @@ import {
   View,
   Switch,
   Text,
+  TextInput,
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import glamorous from 'glamorous-native'
@@ -11,16 +12,71 @@ import moment from 'moment'
 
 import Constants from '../../global/Constants'
 
+const BOX_VERTICAL_PADDING = 20
+const BOX_MARGIN_TOP = 10
+const BOX_MARGIN_BOTTOM = 10
+const PADDING_LEFT = 20
+const PADDING_RIGHT = 20
+const ROW_PADDING_VERTICAL = 5
+const ROW_FONT_SIZE = 18
+const ROW_HEIGHT = 30
+
 const Container = glamorous(View)({
   flex: 1,
+  backgroundColor: Constants.Colors.greyish,
 })
 
 const TimePickerContainer = glamorous(View)({
   alignItems: 'center',
   width: '100%',
-  height: 200,
   marginTop: 10,
   marginBottom: 10,
+})
+
+const ContentBox = glamorous(View)(({ noMarginTop }) => ({
+  flexDirection: 'column',
+  width: '100%',
+  paddingVertical: BOX_VERTICAL_PADDING,
+  paddingLeft: PADDING_LEFT,
+  paddingRight: PADDING_RIGHT,
+  shadowColor: 'rgba(0, 0, 0, 0.1)',
+  shadowOffset: {
+    width: 0,
+    height: 1,
+  },
+  shadowRadius: 5,
+  shadowOpacity: 1,
+  backgroundColor: Constants.Colors.white,
+  marginTop: noMarginTop ? 0 : BOX_MARGIN_TOP,
+}))
+
+const Row = glamorous(View)({
+  width: '100%',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginVertical: ROW_PADDING_VERTICAL,
+})
+
+const RowText = glamorous(Text)(({ marginLeft, marginRight }) => ({
+  fontSize: ROW_FONT_SIZE,
+  color: Constants.Colors.blackTwo,
+  marginLeft,
+  marginRight,
+}))
+
+const RepeatTime = glamorous(View)({
+  flexDirection: 'row',
+  alignItems: 'center',
+})
+
+const RowInput = glamorous(TextInput)({
+  width: 45,
+  paddingVertical: 0,
+  fontSize: ROW_FONT_SIZE,
+  borderColor: Constants.Colors.greyish,
+  borderWidth: 1.5,
+  borderRadius: 3,
 })
 
 export default class AddTimeEventModal extends Component {
@@ -29,10 +85,12 @@ export default class AddTimeEventModal extends Component {
 
     Navigation.events().bindComponent(this)
     this.onTimeSelected = this.onTimeSelected.bind(this)
+    this.onChangeInterval = this.onChangeInterval.bind(this)
 
     this.timeFormat = 'YYYY-MM-DD h:mm A'
     this.state = {
       date: moment().format(this.timeFormat),
+      interval: '1',
     }
   }
 
@@ -72,6 +130,12 @@ export default class AddTimeEventModal extends Component {
 
   saveEvent() {}
 
+  onChangeInterval(text) {
+    this.setState({
+      interval: text,
+    })
+  }
+
   render() {
     const now = moment()
     const aYearFromNow = moment(now).add(1, 'years')
@@ -79,32 +143,56 @@ export default class AddTimeEventModal extends Component {
 
     return (
       <Container>
-        <TimePickerContainer>
-          <DatePicker 
-            style={{ width: '80%' }}
-            date={this.state.date}
-            mode={'datetime'}
-            placeholder={'Select Date'}
-            format={this.timeFormat}
-            minDate={now.format(dateFormat)}
-            maxDate={aYearFromNow.format(dateFormat)}
-            confirmBtnText={'Select'}
-            cancelBtnText={'Cancel'}
-            customStyles={{
-              dateIcon: {
-                alignSelf: 'center',
-                marginLeft: 10,
-              },
-              dateInput: {
-                marginLeft: 0,
-              },
-              dateText: {
-                fontSize: 20,
-              }
-            }}
-            onDateChange={this.onTimeSelected}
-          />
-        </TimePickerContainer>
+        <ContentBox>
+          <TimePickerContainer>
+            <DatePicker 
+              style={{ width: '80%' }}
+              date={this.state.date}
+              mode={'datetime'}
+              placeholder={'Select Date'}
+              format={this.timeFormat}
+              minDate={now.format(dateFormat)}
+              maxDate={aYearFromNow.format(dateFormat)}
+              confirmBtnText={'Select'}
+              cancelBtnText={'Cancel'}
+              customStyles={{
+                dateIcon: {
+                  alignSelf: 'center',
+                  marginLeft: 10,
+                },
+                dateInput: {
+                  marginLeft: 0,
+                },
+                dateText: {
+                  fontSize: 20,
+                }
+              }}
+              onDateChange={this.onTimeSelected}
+            />
+          </TimePickerContainer>
+        </ContentBox>
+        <ContentBox>
+          <Row>
+            <RowText>Repeat</RowText>
+            <Switch />
+          </Row>
+          <Row>
+            <RowText>Repeat Time</RowText>
+            <RepeatTime>
+              <RowText marginRight={10}>Every</RowText>
+              <RowInput
+                value={this.state.interval}
+                onChangeText={this.onChangeInterval}
+                maxLength={3}
+                keyboardType={'decimal-pad'}
+                underlineColorAndroid={'rgba(0, 0, 0, 0)'}
+                fontSize={ROW_FONT_SIZE}
+                textAlign={'center'}
+              />
+              <RowText marginLeft={10}>Days</RowText>
+            </RepeatTime>
+          </Row>
+        </ContentBox>
       </Container>
     )
   }
