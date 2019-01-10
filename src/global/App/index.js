@@ -2,7 +2,7 @@ import { Platform } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Constants from '../Constants'
 
-export default function startSingleScreenApp() {
+function startSingleScreenApp() {
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
       root: {
@@ -12,4 +12,23 @@ export default function startSingleScreenApp() {
       }
     })
   })
+}
+
+function setGlobalOptions() {
+  Navigation.setDefaultOptions({
+    topBar: {
+      visible: true,
+      title: {
+        alignment: 'center',
+      },
+      background: {
+        color: Constants.Colors.dodgerBlue,
+      }
+    }
+  })
+}
+
+export {
+  startSingleScreenApp,
+  setGlobalOptions,
 }

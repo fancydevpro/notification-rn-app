@@ -10,6 +10,7 @@ const goToHome = () => Navigation.setRoot({
         component: {
           ...Constants.Screens.SIDE_MENU_LEFT,
         },
+        visible: false,
       },
       center: {
         stack: {
@@ -18,7 +19,7 @@ const goToHome = () => Navigation.setRoot({
             {
               component: {
                 ...Constants.Screens.HOME_SCREEN,
-              }
+              },
             }
           ],
         }
@@ -32,7 +33,6 @@ const showSideMenu = componentId => Navigation.mergeOptions(
   {
     sideMenu: {
       left: {
-        ...Constants.Screens.SIDE_MENU_LEFT,
         visible: true,
       }
     }
@@ -50,8 +50,30 @@ const hideSideMenu = componentId => Navigation.mergeOptions(
   }
 )
 
+const showSettingsModal = () => Navigation.showModal({
+  stack: {
+    children: [{
+      component: {
+        ...Constants.Screens.SETTINGS_MODAL,
+      }
+    }]
+  }
+})
+
+const showAddTimeEventModal = () => Navigation.showModal({
+  stack: {
+    children: [{
+      component: {
+        ...Constants.Screens.ADD_TIME_EVENT_MODAL,
+      }
+    }]
+  }
+})
+
 export {
   goToHome,
   showSideMenu,
   hideSideMenu,
+  showSettingsModal,
+  showAddTimeEventModal,
 }

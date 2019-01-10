@@ -1,5 +1,6 @@
 import registerScreens from './Screens'
-import startSingleScreenApp from './global/App'
+import { startSingleScreenApp, setGlobalOptions } from './global/App'
 
 registerScreens()
+setGlobalOptions()
 startSingleScreenApp()
