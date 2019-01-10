@@ -15,6 +15,7 @@ export default {
   SETTINGS_MODAL: {
     id: 'SettingsModal',
     name: 'app.SettingsModal',
+    title: 'Settings',
   },
   SIDE_MENU_ID: 'sideMenu',
 }
