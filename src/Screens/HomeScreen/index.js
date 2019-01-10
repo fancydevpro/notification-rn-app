@@ -7,6 +7,7 @@ import {
 import { Navigation } from 'react-native-navigation'
 
 import Constants from '../../global/Constants'
+import { showSideMenu } from '../../global/App/Navigation'
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -19,18 +20,13 @@ export default class HomeScreen extends Component {
   static get options() {
     return {
       topBar: {
-        borderColor: 'red',
         leftButtons: [{
           id: Constants.Buttons.HAMBURGER_BUTTON.id,
           icon: Constants.Images.HAMBURGER,
         }],
         title: {
           text: Constants.Screens.HOME_SCREEN.title,
-          alignment: 'center',
         },
-        background: {
-          color: Constants.Colors.dodgerBlue,
-        }
       }
     }
   }
@@ -42,14 +38,7 @@ export default class HomeScreen extends Component {
   }
 
   toggleDrawer() {
-    //this.isDrawerVisible = !this.isDrawerVisible
-    Navigation.mergeOptions(this.props.componentId, {
-      sideMenu: {
-        left: {
-          visible: true, //this.isDrawerVisible,
-        }
-      }
-    })
+    showSideMenu(this.props.componentId)
   }
 
   render() {
