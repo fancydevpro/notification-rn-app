@@ -8,6 +8,8 @@ import glamorous from 'glamorous-native'
 import FIcon from 'react-native-vector-icons/Feather'
 
 import Constants from '../../global/Constants';
+import { showSettingsModal, hideSideMenu } from '../../global/App/Navigation'
+import { Navigation } from 'react-native-navigation';
 
 const Container = glamorous(View)({
   flex: 1,
@@ -42,13 +44,25 @@ const ButtonText = glamorous(Text)({
 export default class SideMenuLeft extends Component {
   constructor(props) {
     super(props)
-    console.log('navigation: ', {...props})
+
+    this.goToSettingsModal = this.goToSettingsModal.bind(this)
+  }
+
+  goToSettingsModal() {
+    showSettingsModal()
+    this.toggleDrawer()
+  }
+
+  toggleDrawer() {
+    hideSideMenu(Constants.Screens.HOME_SCREEN.id)
   }
 
   render() {
     return (
       <Container>
-        <RowButtonContainer>
+        <RowButtonContainer
+          onPress={this.goToSettingsModal}
+        >
           <ButtonIcon name={'settings'} size={ICON_SIZE} color={Constants.Colors.white} />
           <ButtonText>Settings</ButtonText>
         </RowButtonContainer>

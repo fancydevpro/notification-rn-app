@@ -18,6 +18,12 @@ function setGlobalOptions() {
   Navigation.setDefaultOptions({
     topBar: {
       visible: true,
+      title: {
+        alignment: 'center',
+      },
+      background: {
+        color: Constants.Colors.dodgerBlue,
+      }
     }
   })
 }
