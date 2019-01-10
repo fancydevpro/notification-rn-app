@@ -6,12 +6,8 @@ export default function startSingleScreenApp() {
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
       root: {
-        stack: {
-          children: [{
-            component: {
-              name: Constants.Screens.HOME_SCREEN.screen,
-            }
-          }]
+        component: {
+          ...Constants.Screens.LOADING_SCREEN,
         }
       }
     })
