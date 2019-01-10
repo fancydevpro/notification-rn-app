@@ -6,7 +6,7 @@ import LoadingScreen from './LoadingScreen'
 import HomeScreen from './HomeScreen'
 import SideMenuLeft from './Drawer'
 import SettingsModal from './SettingsModal'
-import AddTimeEventModal from './SettingsModal/AddTimeEvent'
+import AddTimeEventModal from './SettingsModal/AddTimeEventModal'
 
 export default function registerScreens() {
   Navigation.registerComponent(Constants.Screens.LOADING_SCREEN.name, () => LoadingScreen)
