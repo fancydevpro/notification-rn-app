@@ -60,9 +60,20 @@ const showSettingsModal = () => Navigation.showModal({
   }
 })
 
+const showAddTimeEventModal = () => Navigation.showModal({
+  stack: {
+    children: [{
+      component: {
+        ...Constants.Screens.ADD_TIME_EVENT_MODAL,
+      }
+    }]
+  }
+})
+
 export {
   goToHome,
   showSideMenu,
   hideSideMenu,
   showSettingsModal,
+  showAddTimeEventModal,
 }

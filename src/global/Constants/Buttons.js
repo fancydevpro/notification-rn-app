@@ -8,4 +8,7 @@ export default {
   PLUS_BUTTON: {
     id: 'PlusButton',
   },
+  SAVE_BUTTON: {
+    id: 'SaveButton',
+  },
 }

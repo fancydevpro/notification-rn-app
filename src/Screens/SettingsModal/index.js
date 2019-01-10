@@ -9,6 +9,7 @@ import glamorous from 'glamorous-native'
 import { Navigation } from 'react-native-navigation'
 
 import Constants from '../../global/Constants'
+import { showAddTimeEventModal } from '../../global/App/Navigation'
 
 const Container = glamorous(View)({
 
@@ -49,6 +50,10 @@ export default class SettingsModal extends Component {
     } else if (buttonId === Constants.Buttons.PLUS_BUTTON.id) {
       this.addTimeEvent()
     }
+  }
+
+  addTimeEvent() {
+    showAddTimeEventModal()
   }
 
   render() {
