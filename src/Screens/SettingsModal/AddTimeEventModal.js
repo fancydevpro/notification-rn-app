@@ -6,11 +6,21 @@ import {
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import glamorous from 'glamorous-native'
+import DatePicker from 'react-native-datepicker'
+import moment from 'moment'
 
 import Constants from '../../global/Constants'
 
 const Container = glamorous(View)({
+  flex: 1,
+})
 
+const TimePickerContainer = glamorous(View)({
+  alignItems: 'center',
+  width: '100%',
+  height: 200,
+  marginTop: 10,
+  marginBottom: 10,
 })
 
 export default class AddTimeEventModal extends Component {
@@ -18,6 +28,12 @@ export default class AddTimeEventModal extends Component {
     super(props)
 
     Navigation.events().bindComponent(this)
+    this.onTimeSelected = this.onTimeSelected.bind(this)
+
+    this.timeFormat = 'YYYY-MM-DD h:mm A'
+    this.state = {
+      date: moment().format(this.timeFormat),
+    }
   }
 
   static get options() {
@@ -50,12 +66,45 @@ export default class AddTimeEventModal extends Component {
     }
   }
 
+  onTimeSelected(time) {
+    console.log('time: ', time)
+  } 
+
   saveEvent() {}
 
   render() {
+    const now = moment()
+    const aYearFromNow = moment(now).add(1, 'years')
+    const dateFormat = 'YYYY-MM-DD'
+
     return (
       <Container>
-        <Text>Add New Notification Page</Text>
+        <TimePickerContainer>
+          <DatePicker 
+            style={{ width: '80%' }}
+            date={this.state.date}
+            mode={'datetime'}
+            placeholder={'Select Date'}
+            format={this.timeFormat}
+            minDate={now.format(dateFormat)}
+            maxDate={aYearFromNow.format(dateFormat)}
+            confirmBtnText={'Select'}
+            cancelBtnText={'Cancel'}
+            customStyles={{
+              dateIcon: {
+                alignSelf: 'center',
+                marginLeft: 10,
+              },
+              dateInput: {
+                marginLeft: 0,
+              },
+              dateText: {
+                fontSize: 20,
+              }
+            }}
+            onDateChange={this.onTimeSelected}
+          />
+        </TimePickerContainer>
       </Container>
     )
   }
