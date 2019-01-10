@@ -17,5 +17,10 @@ export default {
     name: 'app.SettingsModal',
     title: 'Settings',
   },
+  ADD_TIME_EVENT_MODAL: {
+    id: 'AddTimeEventModal',
+    name: 'app.AddTimeEventModal',
+    title: 'Add New Notification',
+  },
   SIDE_MENU_ID: 'sideMenu',
 }
