@@ -5,4 +5,7 @@ export default {
   BACK_BUTTON: {
     id: 'BackButton',
   },
+  PLUS_BUTTON: {
+    id: 'PlusButton',
+  },
 }

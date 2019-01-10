@@ -30,6 +30,12 @@ export default class SettingsModal extends Component {
             icon: Constants.Images.ARROW_BACK,
           }
         ],
+        rightButtons: [
+          {
+            id: Constants.Buttons.PLUS_BUTTON.id,
+            icon: Constants.Images.ROUND_PLUS,
+          }
+        ],
         title: {
           text: Constants.Screens.SETTINGS_MODAL.title,
         }
@@ -40,6 +46,8 @@ export default class SettingsModal extends Component {
   navigationButtonPressed({buttonId}) {
     if (buttonId === Constants.Buttons.BACK_BUTTON.id) {
       Navigation.dismissModal(this.props.componentId)
+    } else if (buttonId === Constants.Buttons.PLUS_BUTTON.id) {
+      this.addTimeEvent()
     }
   }
 
