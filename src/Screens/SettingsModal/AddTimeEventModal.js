@@ -44,7 +44,7 @@ export default class AddTimeEventModal extends Component {
 
   navigationButtonPressed({buttonId}) {
     if (buttonId === Constants.Buttons.BACK_BUTTON.id) {
-      Navigation.dismissModal()
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === Constants.Buttons.SAVE_BUTTON.id) {
       this.saveEvent()
     }
