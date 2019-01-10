@@ -27,7 +27,8 @@ export default class LoadingScreen extends Component {
       //const user = await AsyncStorage.getItem(USER_KEY)
       //console.log('user: ', user)
       //if (user) {
-        setTimeout(() => goToHome(), 1000)
+        //setTimeout(() => goToHome(), 1000)
+        goToHome()
       //} else {
       //  goToAuth()
       //}
