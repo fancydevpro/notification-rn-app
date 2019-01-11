@@ -10,9 +10,12 @@ const RECURRENCE_RULE_DAILY = 'daily'
 export default class Calendar {
   constructor(getStores) {
     this.getStores = getStores
+
+    this.saveEvent = this.saveEvent.bind(this)
+    this.removeEvent = this.removeEvent.bind(this)
   }
 
-  async addEvent(title, description, time, repeat, repeatTime) {
+  async saveEvent(title, description, time, repeat, repeatTime, eventId) {
     try {
       const authStatus = await CalendarEvents.authorizationStatus()
       if (authStatus !== STATUS_AUTHORIZED) throw new Error(`Permission is ${authStatus}!`)
@@ -26,6 +29,7 @@ export default class Calendar {
           date: 0,
         }]
       }
+      if (eventId) details.id = eventId
       if (repeat) {
         details.recurrence = RECURRENCE_RULE_DAILY,
         details.recurrenceRule = {
@@ -33,9 +37,19 @@ export default class Calendar {
           interval: repeatTime,
         }
       }
-      const eventId = await CalendarEvents.saveEvent(title, details)
-      
-      return eventId
+      const newId = await CalendarEvents.saveEvent(title, details)
+
+      return newId
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async removeEvent(eventId) {
+    try {
+      const authStatus = await CalendarEvents.authorizationStatus()
+      if (authStatus !== STATUS_AUTHORIZED) throw new Error(`Permission is ${authStatus}!`)
+      await CalendarEvents.removeEvent(eventId)
     } catch (error) {
       throw error
     }
