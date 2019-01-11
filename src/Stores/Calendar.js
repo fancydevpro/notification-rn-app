@@ -15,7 +15,7 @@ export default class Calendar {
     this.removeEvent = this.removeEvent.bind(this)
   }
 
-  async saveEvent(title, description, time, repeat, repeatTime, eventId) {
+  async saveEvent(time, title, description, repeat, repeatTime, eventId) {
     try {
       const authStatus = await CalendarEvents.authorizationStatus()
       if (authStatus !== STATUS_AUTHORIZED) throw new Error(`Permission is ${authStatus}!`)
