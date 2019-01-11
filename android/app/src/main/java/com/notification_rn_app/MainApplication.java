@@ -3,6 +3,7 @@ package com.notification_rn_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.calendarevents.CalendarEventsPackage;
 //import android.content.Intent; // <--- Import Intent 
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -41,7 +42,8 @@ public class MainApplication extends NavigationApplication {
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
         // eg. new VectorIconsPackage()
-        new ReactNativePushNotificationPackage()
+        new ReactNativePushNotificationPackage(),
+        new CalendarEventsPackage()
     );
   }
   
@@ -59,6 +61,7 @@ public class MainApplication extends NavigationApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CalendarEventsPackage(),
             new ReactNativePushNotificationPackage(),
             new VectorIconsPackage()
       );

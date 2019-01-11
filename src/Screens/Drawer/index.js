@@ -9,7 +9,6 @@ import FIcon from 'react-native-vector-icons/Feather'
 
 import Constants from '../../global/Constants';
 import { showSettingsModal, hideSideMenu } from '../../global/App/Navigation'
-import { Navigation } from 'react-native-navigation';
 
 const Container = glamorous(View)({
   flex: 1,
@@ -18,13 +17,12 @@ const Container = glamorous(View)({
   backgroundColor: Constants.Colors.softBlueThree,
 })
 
-const PADDING_LEFT = 30
-const FONT_SIZE = 20
-const ICON_SIZE = 20
+const PADDING_LEFT = 35
+const FONT_SIZE = 40
+const ICON_SIZE = 40
 const FONT_WEIGHT = '600'
 
 const RowButtonContainer = glamorous(TouchableOpacity)({
-  flex: 1,
   flexDirection: 'row',
   alignItems: 'center',
   marginLeft: PADDING_LEFT,

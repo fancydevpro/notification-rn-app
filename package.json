@@ -11,6 +11,7 @@
     "moment": "^2.23.0",
     "react": "16.6.3",
     "react-native": "0.57.7",
+    "react-native-calendar-events": "^1.6.4",
     "react-native-datepicker": "^1.7.2",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-navigation": "^2.5.1",

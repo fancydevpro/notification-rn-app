@@ -2,12 +2,28 @@ import React, { Component } from 'react'
 import { 
   View, 
   Text,
-  Alert,
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import glamorous from 'glamorous-native'
 
 import Constants from '../../global/Constants'
 import { showSideMenu } from '../../global/App/Navigation'
+
+const Container = glamorous(View)({
+  flex: 1,
+})
+
+const WelcomeContainer = glamorous(View)({
+  //width: '100%',
+  alignItems: 'center',
+})
+
+const WelcomeTxt = glamorous(Text)({
+  fontSize: 40,
+  fontWeight: '300',
+  color: Constants.Colors.pinkishGreyTwo,
+  marginTop: 200,
+})
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -43,9 +59,11 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Home Screen</Text>
-      </View>
+      <Container>
+        <WelcomeContainer>
+          <WelcomeTxt>Welcome</WelcomeTxt>
+        </WelcomeContainer>
+      </Container>
     )
   }
 }

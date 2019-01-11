@@ -2,6 +2,7 @@ package com.notification_rn_app;
 
 //import com.facebook.react.ReactActivity;
 import com.reactnativenavigation.NavigationActivity;
+import com.calendarevents.CalendarEventsPackage;
 
 public class MainActivity extends NavigationActivity {
 
@@ -13,4 +14,9 @@ public class MainActivity extends NavigationActivity {
     // protected String getMainComponentName() {
     //     return "notification_rn_app";
     // }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        CalendarEventsPackage.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
