@@ -10,11 +10,11 @@ class GlobalStore {
     this.eventtimesStore = new EventTimesStore(this.getStores)
   }
 
-  fetch() {
+  fetch = async () => {
     try {
       const stores = this.getStores()
       const promiseList = Object.keys(stores).reduce((all, store) => {
-        if (store.fetch) all.push(store.fetch)
+        if (stores[store].fetch) all.push(stores[store].fetch())
         return all
       }, [])
       await Promise.all(promiseList)

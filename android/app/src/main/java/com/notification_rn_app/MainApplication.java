@@ -3,6 +3,7 @@ package com.notification_rn_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+//import android.content.Intent; // <--- Import Intent 
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -40,6 +41,7 @@ public class MainApplication extends NavigationApplication {
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
         // eg. new VectorIconsPackage()
+        new ReactNativePushNotificationPackage()
     );
   }
   

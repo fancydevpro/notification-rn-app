@@ -60,11 +60,12 @@ const showSettingsModal = () => Navigation.showModal({
   }
 })
 
-const showAddTimeEventModal = () => Navigation.showModal({
+const showAddTimeEventModal = (passProps) => Navigation.showModal({
   stack: {
     children: [{
       component: {
         ...Constants.Screens.ADD_TIME_EVENT_MODAL,
+        passProps,
       }
     }]
   }

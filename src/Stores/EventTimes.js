@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {
   AsyncStorage,
 } from 'react-native'
@@ -12,6 +13,11 @@ export default class EventTimes {
   }
 
   notiDataMap = new Map()
+
+  fetch = async () => {
+    await this.loadAllNotificationData()
+    await this.removeOldNotificationData()
+  }
 
   loadAllNotificationData = async () => {
     try {
@@ -33,6 +39,20 @@ export default class EventTimes {
       await Promise.all(promiseList)
       this.notiDataMap.clear()
     } catch {
+      throw error
+    }
+  }
+
+  removeOldNotificationData = async () => {
+    try {
+      const now = moment()
+      const nameList = Array.from(this.notiDataMap.keys())
+      const filteredList = nameList.filter(name => moment(this.notiDataMap.get(name).date).isSameOrBefore(now))
+      const promiseList = filteredList.map(name => this.removeNotificationData(name))
+      await Promise.all(promiseList)
+      filteredList.forEach(name => this.notiDataMap.delete(name))
+    } catch (error) {
+      //console.log('error: ', error)
       throw error
     }
   }
