@@ -94,7 +94,7 @@ export default class AddTimeEventModal extends Component {
     this.timeFormat = 'YYYY-MM-DD h:mm A'
     this.state = {
       date: (props.originData ? props.originData.date : moment()).format(this.timeFormat),
-      interval: props.originData ? props.originData.repeatTime : '1',
+      interval: props.originData ? props.originData.repeatTime.toString() : '1',
       title: props.originData ? props.originData.title : '',
       description: props.originData ? props.originData.message : '',
       repeat: props.originData ? props.originData.repeat : true,
@@ -150,18 +150,18 @@ export default class AddTimeEventModal extends Component {
         moment(this.state.date, this.timeFormat),
         this.state.title ? this.state.title : 'Untitled',
         this.state.description,
-        this.state.interval > 0 && this.state.repeat,
+        +this.state.interval > 0 && this.state.repeat,
         'time',
-        this.state.interval,
+        +this.state.interval,
       )
     } else {
       onSave(
         moment(this.state.date, this.timeFormat),
         this.state.title ? this.state.title : 'Untitled',
         this.state.description,
-        this.state.interval > 0 && this.state.repeat,
+        +this.state.interval > 0 && this.state.repeat,
         'time',
-        this.state.interval,
+        +this.state.interval,
       )
     }
     Navigation.dismissModal(this.props.componentId)
