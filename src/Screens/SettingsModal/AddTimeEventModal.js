@@ -137,7 +137,21 @@ export default class AddTimeEventModal extends Component {
     })
   } 
 
-  saveEvent() {}
+  saveEvent() {
+    const {
+      onSave
+    } = this.props
+
+    onSave(
+      moment(this.state.date, this.timeFormat),
+      this.state.title ? this.state.title : 'Untitled',
+      this.state.description,
+      this.state.interval > 0 && this.state.repeat,
+      'time',
+      this.state.interval * 1000 * 3600 * 24
+    )
+    Navigation.dismissModal(this.props.componentId)
+  }
 
   onChangeInterval(text) {
     const value = Math.floor(Math.abs(+text))
