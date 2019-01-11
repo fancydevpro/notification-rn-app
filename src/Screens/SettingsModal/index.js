@@ -75,6 +75,8 @@ export default class SettingsModal extends Component {
     this.addTimeEvent = this.addTimeEvent.bind(this)
     this.onRemoveEvent = this.onRemoveEvent.bind(this)
     this.onEditEvent = this.onEditEvent.bind(this)
+    this.onToggleEnable = this.onToggleEnable.bind(this)
+    this.updateTimeEvent = this.updateTimeEvent.bind(this)
 
     const {
       EventTimes: {
@@ -161,7 +163,7 @@ export default class SettingsModal extends Component {
         repeatTime,
         enable: true,
       })
-      addNotification(name, date, message, repeat, repeatType, repeatTime)
+      addNotification(name, date, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
       const eventList = Array.from(notiDataMap.keys()).map(key => {
         const data = notiDataMap.get(key)
         return {
@@ -180,7 +182,7 @@ export default class SettingsModal extends Component {
         eventList,
       })
     } catch (error) {
-      console.log('error: ', error)
+      //console.log('error: ', error)
       Alert.alert('Sorry, something went wrong!')
     }
   }
@@ -215,7 +217,59 @@ export default class SettingsModal extends Component {
     }
   }
 
-  onEditEvent(name) {}
+  async updateTimeEvent(name, date, title, message, repeat, repeatType, repeatTime) {
+    try {
+      const {
+        EventTimes: {
+          saveNotificationData,
+          notiDataMap,
+        },
+        PushNotification: {
+          addNotification,
+        }
+      } = getStores()
+  
+      await saveNotificationData(name, { 
+        date: date.valueOf(),
+        title, 
+        message, 
+        repeat, 
+        repeatType, 
+        repeatTime,
+        enable: true,
+      })
+      addNotification(name, date, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
+      const eventList = Array.from(notiDataMap.keys()).map(key => {
+        const data = notiDataMap.get(key)
+        return {
+          name: key,
+          ...data,
+          date: moment(data.date),
+          enable: true,
+        }
+      })
+      eventList.sort((a, b) => {
+        if (a.date.isAfter(b.date)) return 1
+        else if (a.date.isBefore(b.date)) return -1
+        return 0
+      })
+      this.setState({
+        eventList,
+      })
+    } catch (error) {
+      //console.log('error: ', error)
+      Alert.alert('Sorry, something went wrong!')
+    }
+  }
+
+  onEditEvent(name) {
+    const idx = this.state.eventList.findIndex(el => el.name === name)
+
+    showAddTimeEventModal({
+      onUpdate: this.updateTimeEvent,
+      originData: this.state.eventList[idx]
+    })
+  }
 
   async onToggleEnable(name, value) {
     try {
@@ -232,12 +286,12 @@ export default class SettingsModal extends Component {
 
       const idx = this.state.eventList.findIndex(el => el.name === name)
       const originData = this.state.eventList[idx]
-      console.log('originData: ', originData)
+      
       await saveNotificationData(name, { 
         ...originData,
         enable: value,
       })
-      if (value) addNotification(name, originData.date, originData.message, originData.repeat, originData.repeatType, originData.repeatTime)
+      if (value) addNotification(name, originData.date, originData.message, originData.repeat, originData.repeatType, originData.repeatTime * 1000 * 3600 * 24)
       else cancelNotification(name)
 
       const eventList = Array.from(notiDataMap.keys()).map(key => {
@@ -252,7 +306,7 @@ export default class SettingsModal extends Component {
         eventList,
       })
     } catch (error) {
-      console.log('Error: ', error)
+      //console.log('Error: ', error)
       Alert.alert('Sorry, something went wrong!')
     }
   }
