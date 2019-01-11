@@ -23,7 +23,6 @@ const ICON_SIZE = 40
 const FONT_WEIGHT = '600'
 
 const RowButtonContainer = glamorous(TouchableOpacity)({
-  flex: 1,
   flexDirection: 'row',
   alignItems: 'center',
   marginLeft: PADDING_LEFT,
