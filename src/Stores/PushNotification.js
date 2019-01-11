@@ -21,7 +21,13 @@ const DEFAULT_DETAILS = {
 export default class PushNotificationStore {
   constructor(getStores) {
     this.getStores = getStores
+
+    this.addNotification = this.addNotification.bind(this)
+    this.cancelNotification = this.cancelNotification.bind(this)
+    this.cancelAllNotifications = this.cancelAllNotifications.bind(this)
   }
+
+  fetch = () => this.configureNotification()
 
   configureNotification() {
     PushNotification.configure({
@@ -43,6 +49,7 @@ export default class PushNotificationStore {
 
   addNotification(name, date, message, repeat = false, repeatType = null, repeatTime = null) {
     const dateMoment = moment(date)
+    console.log('PushNotificaiton: ', PushNotification)
     PushNotification.cancelLocalNotifications({ id: name })
 
     if (dateMoment.isAfter(moment())) {
@@ -60,5 +67,13 @@ export default class PushNotificationStore {
         repeatTime: repeat ? repeatTime : null,
       })
     }
+  }
+
+  cancelNotification(name) {
+    PushNotification.cancelLocalNotifications({ id: name })
+  }
+
+  cancelAllNotifications() {
+    PushNotification.cancelAllLocalNotifications()
   }
 }
