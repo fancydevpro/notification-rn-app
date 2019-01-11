@@ -147,6 +147,9 @@ export default class SettingsModal extends Component {
         },
         PushNotification: {
           addNotification,
+        },
+        Calendar: {
+          saveEvent,
         }
       } = getStores()
   
@@ -154,7 +157,10 @@ export default class SettingsModal extends Component {
       let name = length ? `${+this.state.eventList[length - 1].name + 1}` : '0'
       if (+name > 1000) name = '0'
   
-      await saveNotificationData(name, { 
+      const eventId = await saveEvent(date, title, message, repeat, repeatTime)
+      addNotification(name, date, title, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
+      await saveNotificationData(name, {
+        eventId,
         date: date.valueOf(),
         title, 
         message, 
@@ -163,7 +169,6 @@ export default class SettingsModal extends Component {
         repeatTime,
         enable: true,
       })
-      addNotification(name, date, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
       const eventList = Array.from(notiDataMap.keys()).map(key => {
         const data = notiDataMap.get(key)
         return {
@@ -196,11 +201,17 @@ export default class SettingsModal extends Component {
         },
         PushNotification: {
           cancelNotification,
+        },
+        Calendar: {
+          removeEvent,
         }
       } = getStores()
 
+      const eventId = notiDataMap.get(name).eventId
+      const enable = notiDataMap.get(name).enable
+      enable && eventId && await removeEvent(eventId)
+      enable && cancelNotification(name)
       await removeNotificationData(name)
-      cancelNotification(name)
       const eventList = Array.from(notiDataMap.keys()).map(key => {
         const data = notiDataMap.get(key)
         return {
@@ -226,10 +237,16 @@ export default class SettingsModal extends Component {
         },
         PushNotification: {
           addNotification,
+        },
+        Calendar: {
+          saveEvent,
         }
       } = getStores()
   
-      await saveNotificationData(name, { 
+      const newEventId = await saveEvent(date, title, message, repeat, repeatTime, notiDataMap.get(name).eventId)
+      addNotification(name, date, title, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
+      await saveNotificationData(name, {
+        eventId: newEventId,
         date: date.valueOf(),
         title, 
         message, 
@@ -238,7 +255,6 @@ export default class SettingsModal extends Component {
         repeatTime,
         enable: true,
       })
-      addNotification(name, date, message, repeat, repeatType, repeatTime * 1000 * 3600 * 24)
       const eventList = Array.from(notiDataMap.keys()).map(key => {
         const data = notiDataMap.get(key)
         return {
@@ -281,18 +297,35 @@ export default class SettingsModal extends Component {
         PushNotification: {
           addNotification,
           cancelNotification,
+        },
+        Calendar: {
+          removeEvent,
+          saveEvent,
         }
       } = getStores()
 
       const idx = this.state.eventList.findIndex(el => el.name === name)
       const originData = this.state.eventList[idx]
       
-      await saveNotificationData(name, { 
-        ...originData,
-        enable: value,
-      })
-      if (value) addNotification(name, originData.date, originData.message, originData.repeat, originData.repeatType, originData.repeatTime * 1000 * 3600 * 24)
-      else cancelNotification(name)
+      if (value) {
+        const eventId = await saveEvent(originData.date, originData.title, originData.message, originData.repeat, originData.repeatTime)
+        addNotification(name, originData.date, originData.title, originData.message, originData.repeat, originData.repeatType, originData.repeatTime * 1000 * 3600 * 24)
+        await saveNotificationData(name, { 
+          ...originData,
+          eventId,
+          enable: value,
+        })
+      }
+      else {
+        const eventId = notiDataMap.get(name).eventId
+        eventId && await removeEvent(eventId)
+        cancelNotification(name)
+        await saveNotificationData(name, { 
+          ...originData,
+          eventId: null,
+          enable: value,
+        })
+      }
 
       const eventList = Array.from(notiDataMap.keys()).map(key => {
         const data = notiDataMap.get(key)
