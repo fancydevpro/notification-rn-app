@@ -188,7 +188,7 @@ export default class SettingsModal extends Component {
       })
     } catch (error) {
       //console.log('error: ', error)
-      Alert.alert('Sorry, something went wrong!')
+      if (error.errType !== 'permission') Alert.alert('Sorry, something went wrong!')
     }
   }
 
@@ -224,7 +224,7 @@ export default class SettingsModal extends Component {
         eventList,
       })
     } catch (error) {
-      Alert.alert('Sorry, something went wrong!')
+      if (error.errType !== 'permission') Alert.alert('Sorry, something went wrong!')
     }
   }
 
@@ -274,7 +274,7 @@ export default class SettingsModal extends Component {
       })
     } catch (error) {
       //console.log('error: ', error)
-      Alert.alert('Sorry, something went wrong!')
+      if (error.errType !== 'permission') Alert.alert('Sorry, something went wrong!')
     }
   }
 
@@ -340,7 +340,7 @@ export default class SettingsModal extends Component {
       })
     } catch (error) {
       //console.log('Error: ', error)
-      Alert.alert('Sorry, something went wrong!')
+      if (error.errType !== 'permission') Alert.alert('Sorry, something went wrong!')
     }
   }
 
