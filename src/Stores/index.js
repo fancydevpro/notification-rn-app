@@ -1,5 +1,6 @@
 import PushNotificationStore from './PushNotification'
 import EventTimesStore from './EventTimes'
+import CalendarStore from './Calendar'
 
 let globalStore
 
@@ -8,6 +9,7 @@ class GlobalStore {
     this.getStores = this.getStores.bind(this)
     this.pushnotificationStore = new PushNotificationStore(this.getStores)
     this.eventtimesStore = new EventTimesStore(this.getStores)
+    this.calendarStore = new CalendarStore(this.getStores)
   }
 
   fetch = async () => {
@@ -27,6 +29,7 @@ class GlobalStore {
     return {
       PushNotification: this.pushnotificationStore,
       EventTimes: this.eventtimesStore,
+      Calendar: this.calendarStore,
     }
   }
 }
