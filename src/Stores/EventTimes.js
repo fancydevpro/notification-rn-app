@@ -16,7 +16,7 @@ export default class EventTimes {
 
   fetch = async () => {
     await this.loadAllNotificationData()
-    await this.removeOldNotificationData()
+    //await this.removeOldNotificationData()
   }
 
   loadAllNotificationData = async () => {
