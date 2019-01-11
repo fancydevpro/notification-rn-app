@@ -47,7 +47,7 @@ export default class PushNotificationStore {
     })
   }
 
-  addNotification(name, date, message, repeat = false, repeatType = null, repeatTime = null) {
+  addNotification(name, date, title, message, repeat = false, repeatType = null, repeatTime = null) {
     const dateMoment = moment(date)
     console.log('PushNotificaiton: ', PushNotification)
     PushNotification.cancelLocalNotifications({ id: name })
@@ -60,7 +60,7 @@ export default class PushNotificationStore {
         // iOS
         userInfo: { id: name },
         // Android & iOS
-        title: 'Alarm',
+        title,
         message,
         date: new Date(dateMoment.valueOf()),
         repeatType: repeat ? repeatType : null,
