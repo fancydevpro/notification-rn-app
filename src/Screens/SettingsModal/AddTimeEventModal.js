@@ -10,8 +10,15 @@ import glamorous from 'glamorous-native'
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Dropdown } from 'react-native-material-dropdown'
 
 import Constants from '../../global/Constants'
+
+const DEFAULT_DESCRIPTIONS = [
+  'Feed the Dog',
+  'Feed the Cat',
+  'Feed the Fish',
+]
 
 const BOX_VERTICAL_PADDING = 20
 const BOX_MARGIN_TOP = 10
@@ -96,8 +103,9 @@ export default class AddTimeEventModal extends Component {
       date: (props.originData ? props.originData.date : moment()).format(this.timeFormat),
       interval: props.originData ? props.originData.repeatTime.toString() : '1',
       title: props.originData ? props.originData.title : '',
-      description: props.originData ? props.originData.message : '',
+      description: props.originData ? props.originData.message : DEFAULT_DESCRIPTIONS[0],
       repeat: props.originData ? props.originData.repeat : true,
+      dropdownDescriptions: Array.from(DEFAULT_DESCRIPTIONS).map(value => ({ value })),
     }
   }
 
@@ -181,9 +189,15 @@ export default class AddTimeEventModal extends Component {
     })
   }
 
-  onChangeDescription(text) {
+  // onChangeDescription(text) {
+  //   this.setState({
+  //     description: text,
+  //   })
+  // }
+
+  onChangeDescription(value, index, data) {
     this.setState({
-      description: text,
+      description: value,
     })
   }
 
@@ -274,7 +288,7 @@ export default class AddTimeEventModal extends Component {
             <Row>
               <RowText>Description</RowText>
             </Row>
-              <RowInput
+              {/*<RowInput
                 value={this.state.description}
                 onChangeText={this.onChangeDescription}
                 maxLength={256}
@@ -285,6 +299,16 @@ export default class AddTimeEventModal extends Component {
                 numberOfLines={5}
                 placeholder={'Type the description here...'}
                 textAlignVertical={'top'}
+              />*/}
+              <Dropdown
+                label='Event type'
+                data={this.state.dropdownDescriptions}
+                animationDuration={200}
+                fontSize={ROW_FONT_SIZE}
+                labelFontSize={ROW_FONT_SIZE * 2 / 3}
+                //textColor={Constants.Colors.greyish}
+                value={this.state.description}
+                onChangeText={this.onChangeDescription}
               />
           </ContentBox>
         </Container>
