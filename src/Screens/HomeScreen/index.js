@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { 
   View, 
   Text,
+  Alert,
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import glamorous from 'glamorous-native'
 
 import Constants from '../../global/Constants'
-import { showSideMenu } from '../../global/App/Navigation'
+import { showSideMenu, showSettingsModal } from '../../global/App/Navigation'
+import { getStores } from '../../Stores'
 
 const Container = glamorous(View)({
   flex: 1,
@@ -28,6 +30,8 @@ const WelcomeTxt = glamorous(Text)({
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props)
+
+    this.goToSettingsScreen = this.goToSettingsScreen.bind(true)
 
     Navigation.events().bindComponent(this)
     this.isDrawerVisible = false
@@ -51,6 +55,32 @@ export default class HomeScreen extends Component {
     if (buttonId === Constants.Buttons.HAMBURGER_BUTTON.id) {
       this.toggleDrawer()
     }
+  }
+
+  componentDidMount() {
+    const {
+      App: {
+        launchedAppFlag,
+        setLaunchFlag,
+      }
+    } = getStores()
+
+    if (!launchedAppFlag) {
+      setLaunchFlag()
+      Alert.alert(
+        '',
+        'You don\'t have any event will be notified. Please add!',
+        [
+          { text: 'OK', onPress: () => this.goToSettingsScreen({ firstLaunch: true }) },
+          { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+        ],
+        { cancelable: true }
+      )
+    }
+  }
+
+  goToSettingsScreen(passProps) {
+    showSettingsModal(passProps)
   }
 
   toggleDrawer() {

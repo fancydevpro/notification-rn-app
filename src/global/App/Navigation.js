@@ -50,11 +50,12 @@ const hideSideMenu = componentId => Navigation.mergeOptions(
   }
 )
 
-const showSettingsModal = () => Navigation.showModal({
+const showSettingsModal = (passProps) => Navigation.showModal({
   stack: {
     children: [{
       component: {
         ...Constants.Screens.SETTINGS_MODAL,
+        passProps,
       }
     }]
   }

@@ -1,6 +1,7 @@
 import PushNotificationStore from './PushNotification'
 import EventTimesStore from './EventTimes'
 import CalendarStore from './Calendar'
+import AppStore from './App'
 
 let globalStore
 
@@ -10,6 +11,7 @@ class GlobalStore {
     this.pushnotificationStore = new PushNotificationStore(this.getStores)
     this.eventtimesStore = new EventTimesStore(this.getStores)
     this.calendarStore = new CalendarStore(this.getStores)
+    this.appStore = new AppStore(this.getStores)
   }
 
   fetch = async () => {
@@ -30,13 +32,14 @@ class GlobalStore {
       PushNotification: this.pushnotificationStore,
       EventTimes: this.eventtimesStore,
       Calendar: this.calendarStore,
+      App: this.appStore,
     }
   }
 }
 
-function initStore() {
+async function initStore() {
   globalStore = new GlobalStore()
-  globalStore.fetch()
+  await globalStore.fetch()
 }
 
 function getGlobalStore() {

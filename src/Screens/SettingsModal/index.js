@@ -61,6 +61,11 @@ const Txt = glamorous(Text)({
   color: Constants.Colors.blackTwo,
 })
 
+const NoDataTxt = glamorous(Txt)({
+  marginHorizontal: 20,
+  textAlign: 'center',
+})
+
 const NoData = glamorous(View)({
   alignItems: 'center',
   paddingVertical: BOX_VERTICAL_PADDING,
@@ -128,6 +133,12 @@ export default class SettingsModal extends Component {
     if (buttonId === Constants.Buttons.BACK_BUTTON.id) {
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === Constants.Buttons.PLUS_BUTTON.id) {
+      this.onAddTimeEvent()
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.firstLaunch) {
       this.onAddTimeEvent()
     }
   }
@@ -385,7 +396,7 @@ export default class SettingsModal extends Component {
           ))
           :
           <NoData>
-            <Txt>No Data</Txt>
+            <NoDataTxt>Please click (+) button on top bar to add a new event.</NoDataTxt>
           </NoData>
         }
       </Container>
