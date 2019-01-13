@@ -87,6 +87,10 @@ const RowInput = glamorous(TextInput)(({ width }) => ({
   borderRadius: 3,
 }))
 
+const Title = glamorous(RowInput)({
+  paddingHorizontal: 15,
+})
+
 export default class AddTimeEventModal extends Component {
   constructor(props) {
     super(props)
@@ -274,7 +278,7 @@ export default class AddTimeEventModal extends Component {
           <ContentBox>
             <Row>
               <RowText>Title</RowText>
-              <RowInput
+              <Title
                 value={this.state.title}
                 onChangeText={this.onChangeTitle}
                 maxLength={30}
