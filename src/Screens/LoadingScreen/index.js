@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  AsyncStorage
 } from 'react-native'
 import glamorous from 'glamorous-native'
 
 import { goToHome } from '../../global/App/Navigation'
-
-//import { USER_KEY } from './config'
+import { initStore } from '../../Stores'
 
 const Container = glamorous(View)({
   flex: 1,
@@ -22,19 +20,12 @@ const LoadingTxt = glamorous(Text)({
 
 export default class LoadingScreen extends Component {
   async componentDidMount() {
-    console.log('did mounted')
     try {
-      //const user = await AsyncStorage.getItem(USER_KEY)
-      //console.log('user: ', user)
-      //if (user) {
-        //setTimeout(() => goToHome(), 1000)
-        goToHome()
-      //} else {
-      //  goToAuth()
-      //}
+      await initStore()
+      goToHome()
     } catch (err) {
-      console.log('error: ', err)
-      //goToAuth()
+      //console.log('error: ', err)
+      goToHome()
     }
   }
 
