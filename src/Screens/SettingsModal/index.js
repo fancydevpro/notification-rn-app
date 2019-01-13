@@ -137,6 +137,12 @@ export default class SettingsModal extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.firstLaunch) {
+      this.onAddTimeEvent()
+    }
+  }
+
   onAddTimeEvent() {
     showAddTimeEventModal({
       onSave: this.addTimeEvent,
